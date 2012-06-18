@@ -24,8 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Servo MotorWarrior[7];
 
-int valx = 5;
-int valy = 5;
+int valx = 0;
+int valy = 0;
 int Motor[7] = {7, 8, 9, 10, 11, 12, 13};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
 int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
