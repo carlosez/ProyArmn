@@ -105,7 +105,7 @@ void inData(){
       inByte == 45   || inByte == 61 || inByte == 63) {
       command.concat(inByte);
       
-      Serial.println(command);
+      
       
     }
   }// end serial.available
@@ -136,7 +136,7 @@ void inData(){
 
 
   }
-  else if((estado_actual == codo  ||  estado_actual==muneca || estado_actual==base) &&
+  else if((estado_actual == codo  ||  estado_actual==muneca || estado_actual==base) || 
     (command.indexOf('x') ||  command.indexOf('y')))
   {
     s1.toCharArray(carray,6);
@@ -152,7 +152,7 @@ void inData(){
       intervalox= atoi(carray);
 
       s2.toCharArray(carray,6);
-      valorx= atoi(carray)*100;
+      valorx= atoi(carray)*1000;
       Serial.print("Comando  x");
       Serial.print(intervalox,DEC);
       Serial.print(" , ");
@@ -168,7 +168,7 @@ void inData(){
     flagy=true;
 
     s1.toCharArray(carray,6);
-    intervaloy= atoi(carray)*100;
+    intervaloy= atoi(carray)*1000;
 
     s2.toCharArray(carray,6);
     valory= atoi(carray);
@@ -245,6 +245,7 @@ void inData(){
     botonPresionado[i]=(!(botonAnterior[i]) && botones[i]);
   }
 }
+
 
 
 void MEF1(){
