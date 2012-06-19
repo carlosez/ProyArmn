@@ -32,7 +32,7 @@ int valorx,valory,intervalox,intervaloy;
 
 boolean flagx = false;
 boolean flagy = false;
-
+boolean flaglectura = true;
 String s1,s2;
 int servo;
 int angulo;
@@ -102,19 +102,22 @@ void inData(){
     // only input if a letter, number, =,?,+ are typed! 
     if ((inByte >= 65 && inByte <= 94) || (inByte >=97 && inByte <=122) ||
       (inByte >= 48 &&  inByte <=57) || inByte == 43 || inByte == 44   || 
-      inByte == 45   || inByte == 61 || inByte == 63) {
+      inByte == 45   || inByte == 61 || inByte == 63)
+      {
       command.concat(inByte);
-      
-      
-      
-    }
-    inByte=10;
+      }
+    flaglectura = Serial.available();
   }// end serial.available
-
+  
+  
+  if (flaglectura > 0)
+    {inByte = 10;
+    command.concat(inByte);}
+    
     if (inByte == 10 || inByte == 13)
   {
-    inByte = 0;
-  
+    flaglectura =false;
+  Serial.println(command);
 
   if (command.indexOf('[')>0 && estado_actual == serial)
   {
