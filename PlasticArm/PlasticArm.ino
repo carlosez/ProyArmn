@@ -43,7 +43,7 @@ char carray[6];
 int intervalo;
 int valor;
 
-long previousMillis = 0;
+long previousMillisx,previousMillisy = 0;
 
 int Motor[7] = {7, 8, 9, 10, 11, 12, 13};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
@@ -95,8 +95,8 @@ void inData(){
    inByte = Serial.read();
     // only input if a letter, number, =,?,+ are typed! 
     if ((inByte >= 65 && inByte <= 93) || (inByte >=97 && inByte <=122) ||
-    (inByte >= 48 &&  inByte <=57) || inByte == 43 || inByte == 44   ||
-    inByte == 61 || inByte == 63) {
+    (inByte >= 48 &&  inByte <=57) || inByte == 43 || inByte == 44   || 
+    inByte == 45   || inByte == 61 || inByte == 63) {
     command.concat(inByte);
     }
         }// end serial.available
@@ -141,13 +141,14 @@ void inData(){
           intervalox= atoi(carray);
           
           s2.toCharArray(carray,6);
-          valorx= atoi(carray);
+          valorx= atoi(carray)*100;
           Serial.print("Comando  x");
           Serial.print(intervalo,DEC);
           Serial.print(" , ");
           Serial.println(valor,DEC);
-           
+               previousMillisx= millis();
          
+       }
        }
        else if (command.indexOf('y')==0)
        {
@@ -156,7 +157,7 @@ void inData(){
           flagy=true;
          
           s1.toCharArray(carray,6);
-          intervaloy= atoi(carray);
+          intervaloy= atoi(carray)*100;
           
           s2.toCharArray(carray,6);
           valory= atoi(carray);
@@ -164,13 +165,9 @@ void inData(){
           Serial.print(intervalo,DEC);
           Serial.print(" , ");
           Serial.println(valor,DEC);
+              previousMillisy= millis();
        }
-       
-         
-          previousMillis= millis();
-          
-         
-       }
+
        else 
        { 
         if (!command.equalsIgnoreCase(""))
@@ -179,17 +176,17 @@ void inData(){
        }
        }
        
+       command="";
        
-       
-  if(millis() - previousMillis < intervalo)
+  if(millis() - previousMillisx < intervalox)
       {
         if (flagx== true)
         {
-          valx=valor;
+          valx=valorx;
         }
         if (flagy == true)
         {
-          valy=valor;
+          valy=valorx;
         }
       } else //una vez sea mayor
       {
@@ -198,11 +195,30 @@ void inData(){
           valx=0;
            flagx=false; 
         }
+        
+      
+    }
+  
+  
+  
+  if(millis() - previousMillisy < intervaloy)
+      {
+        if (flagy== true)
+        {
+          valy=valory;
+        }
         if (flagy == true)
         {
-          valy=0;
-          flagy=false;
+          valy=valory;
         }
+      } else //una vez sea mayor
+      {
+      if (flagx== true)
+        {
+          valx=0;
+           flagx=false; 
+        }
+        
       
     }
   
@@ -385,9 +401,7 @@ void outData(){
    // Serial.print(valx,DEC);
    // Serial.print(" ");
    
-   Serial.print(posAngular[4],DEC);
-   Serial.print("\n");
-    delay(50);
+   
 }
 
 void posInicial(){
