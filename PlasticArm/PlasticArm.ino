@@ -63,11 +63,11 @@ enum estados_secuencia {
   subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
 
-boolean botones[5]={
-  HIGH, HIGH, HIGH, HIGH, HIGH};
-boolean botonAnterior[5]={
-  HIGH, HIGH, HIGH, HIGH, HIGH};
-boolean botonPresionado[5];
+boolean botones[6]={
+  HIGH, HIGH, HIGH, HIGH, HIGH,HIGH};
+boolean botonAnterior[6]={
+  HIGH, HIGH, HIGH, HIGH, HIGH,HIGH};
+boolean botonPresionado[6];
 
 
 
@@ -100,17 +100,20 @@ void inData(){
   if (Serial.available() > 0){
     inByte = Serial.read();
     // only input if a letter, number, =,?,+ are typed! 
-    if ((inByte >= 65 && inByte <= 93) || (inByte >=97 && inByte <=122) ||
+    if ((inByte >= 65 && inByte <= 94) || (inByte >=97 && inByte <=122) ||
       (inByte >= 48 &&  inByte <=57) || inByte == 43 || inByte == 44   || 
       inByte == 45   || inByte == 61 || inByte == 63) {
       command.concat(inByte);
+      
+      Serial.println(command);
+      
     }
   }// end serial.available
 
     if (inByte == 10 || inByte == 13)
   {
     inByte = 0;
-  } 
+  
 
   if (command.indexOf('[')>0 && estado_actual == serial)
   {
@@ -123,11 +126,13 @@ void inData(){
 
     s2.toCharArray(carray,6);
     angulo = atoi(carray);
-    posAngular[servo]=angulo;///Abra que arreglar esto para que no sea directo
+    
     Serial.print("Comando [");
     Serial.print(servo,DEC);
     Serial.print("] ");
     Serial.println(angulo,DEC);
+    posAngular[servo]=angulo;///Abra que arreglar esto para que no sea directo
+
 
 
   }
@@ -183,7 +188,7 @@ void inData(){
   }
 
   command="";
-
+  }
   if(millis() - previousMillisx < intervalox)
   {
     if (flagx== true)
@@ -233,7 +238,7 @@ void inData(){
 
 
 
-  for(int i = 0; i<5; i++)
+  for(int i = 0; i<6; i++)
   {
     botonAnterior[i]=botones[i];
     botones[i]=digitalRead(i+2);
@@ -256,6 +261,7 @@ void MEF1(){
       estado_actual=secuencia;
       estado_secuencia1=inicial;
     }
+    if(botonPresionado[5])
 
     break;
 
@@ -288,8 +294,7 @@ void MEF1(){
 
   case serial:
 
-
-    //done
+    
 
 
     break;
@@ -391,6 +396,8 @@ void MEF1(){
     if(botonPresionado[3]) estado_actual=base;
 
     break;
+    
+    
 
   }
 
