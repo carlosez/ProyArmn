@@ -22,10 +22,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Servo.h>
 
+
 Servo MotorWarrior[7];
 
 int valx = 0;
 int valy = 0;
+
+int entrada = 0;
+
+int ledState = LOW;             // ledState used to set the LED
+long previousMillis = 0;
+
+
 int Motor[7] = {7, 8, 9, 10, 11, 12, 13};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
 int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
@@ -71,12 +79,27 @@ void loop(){
 }
 
 void inData(){
-//    valx = (map(analogRead(A0),0,1023,-512,511) + 10)/32;
-//    valy = (map(analogRead(A1),0,1023,-512,511) + 5)/32;
    
-   //Estos controles seran diferentes, no seran analogos
-  // valx = map(analogRead(A0),0,1023,-45,45)/8;
-   //valy = map(analogRead(A1),0,1023,-45,45)/8;
+   entrada = Serial.read();
+   
+   if (entrada > 0 && entrada<256)
+   {
+   valx=8;
+   }
+   else if (entrada >256 && entrada <512)
+   {
+     valx=-8;
+   }
+   
+    if (entrada > 512 && entrada <768)
+   {
+   valx=8;
+   }
+   else if (entrada >768)
+   {
+     valx=-8;
+   }
+   
    
     for(int i = 0; i<5; i++){
       botonAnterior[i]=botones[i];

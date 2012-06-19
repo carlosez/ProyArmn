@@ -24,12 +24,7 @@ s6.attach(11);
 void loop()
 {
 
-  int time = millis();
-  if (time > millis() + 60000)
-  {
-  time =0;
-  MoveServo(1,170);
-  }
+  
   
   
   
