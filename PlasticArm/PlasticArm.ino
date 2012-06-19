@@ -29,11 +29,14 @@ int valx = 0;
 int valy = 0;
 
 String s1,s2;
-int cor;
+int servo;
+int angulo;
 String command;
 char inByte;
 char carray[6];
 
+int intervalo;
+int valor;
 
 int ledState = LOW;             // ledState used to set the LED
 long previousMillis = 0;
@@ -100,12 +103,50 @@ void inData(){
             inByte = 0;
         } 
        
-       if (command.indexOf('[')>0)
+       if (command.indexOf('[')>0 && estado_actual == serial)
        {
-         cor = command.indexOf('[')
-         s1 = command.substring(1,command.indexOf(']'))
-         s2 = command.substring(command.indexOf(']'))
-       
+         
+         s1 = command.substring(1,1);
+         s2 = command.substring(command.indexOf(']')+1);
+         
+         s1.toCharArray(carray,6);
+         servo = atoi(carray);
+         
+         s2.toCharArray(carray,6);
+         angulo = atoi(carray);
+          posAngular[servo]=angulo;
+          Serial.print("Comando [");
+          Serial.print(servo,DEC);
+          Serial.print("] ");
+          Serial.println(angulo,DEC);
+         
+       }
+       else if(estado_actual == codo  ||  estado_actual==muneca || estado_actual==base )
+       {
+         
+       s1 = command.substring(1,1);
+        s2 = command.substring(command.indexOf(']')+1);
+         
+         s1.toCharArray(carray,6);
+         servo = atoi(carray);
+         
+         s2.toCharArray(carray,6);
+         angulo = atoi(carray);
+          posAngular[servo]=angulo;
+          Serial.print("Comando (");
+          Serial.print(intervalo,DEC);
+          Serial.print(") ");
+          Serial.println(tiempo,DEC);
+         
+         
+         
+         
+       }
+       else 
+       { 
+        if (!command.equalsIgnoreCase(""))
+        {
+         Serial.println("Invalid argument.");}
        }
   
   
