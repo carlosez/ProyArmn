@@ -28,6 +28,9 @@ Servo MotorWarrior[7];
 int valx = 0;
 int valy = 0;
 
+boolean flagx = false;
+boolean flagy = false;
+
 String s1,s2;
 int servo;
 int angulo;
@@ -38,9 +41,7 @@ char carray[6];
 int intervalo;
 int valor;
 
-int ledState = LOW;             // ledState used to set the LED
 long previousMillis = 0;
-
 
 int Motor[7] = {7, 8, 9, 10, 11, 12, 13};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
@@ -119,29 +120,41 @@ void inData(){
           Serial.print(servo,DEC);
           Serial.print("] ");
           Serial.println(angulo,DEC);
+          
          
        }
-       else if(estado_actual == codo  ||  estado_actual==muneca || estado_actual==base )
+       else if((estado_actual == codo  ||  estado_actual==muneca || estado_actual==base) &&
+       (command.indexOf('x') ||  command.indexOf('y')))
        {
          
        s1 = command.substring(1,1);
-        s2 = command.substring(command.indexOf(']')+1);
+       if ( command.indexOf('x')== 0 )
+       {
+          s2 = command.substring(command.indexOf(',')+1);
+          Serial.print("Comando  x");
+          flagx=true;
+          s2.toCharArray(carray,6);
+           valor = atoi(carray);
          
-         s1.toCharArray(carray,6);
-         valor = atoi(carray);
-         
+       }
+       else if (command.indexOf('y')==0)
+       {
+         s2 = command.substring(command.indexOf(',')+1);
+         Serial.print("Comando  y");
+         flagy=true;
          s2.toCharArray(carray,6);
-       intervalo = atoi(carray);
+           valor = atoi(carray);
+       }
        
-          Serial.print("Comando (");
-          Serial.print(intervalo,DEC);
-          Serial.print(") ");
+         s1.toCharArray(carray,6);
+         intervalo = atoi(carray);
+         
+         Serial.print(intervalo,DEC);
+          Serial.print(" , ");
           Serial.println(valor,DEC);
-         
-         
-           valx = 0;
-           valy = 0;
-   
+
+          previousMillis= millis();
+          
          
        }
        else 
@@ -199,6 +212,27 @@ void MEF1(){
       if(botonPresionado[3]) estado_actual=base;
       if(botonPresionado[4]){ estado_actual=secuencia;
                               estado_secuencia1=inicial;}
+    
+    break;
+    
+    case serial:
+    
+    
+    if(millis() - previousMillis > intervalo) {
+      
+    
+    if (flagx== true)
+    {
+     // cambiar(valor,)
+      flagx=false;
+    }
+    else
+    {
+      previousMillis= millis();
+    }
+
+      }
+    
     
     break;
    
@@ -280,10 +314,9 @@ void MEF1(){
         
         break;
         
-
-
-
+       
         case paro:
+          
           
         
         break;
