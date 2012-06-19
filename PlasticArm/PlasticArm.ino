@@ -40,7 +40,6 @@ int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
 
 int velDiv=0;
 
-enum Estados {base,  muneca,  codo, secuencia, descansando};
 enum Estados estado_actual = base;
 
 //definicion de estados para secuencia1
