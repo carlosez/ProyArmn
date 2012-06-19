@@ -97,7 +97,7 @@ void loop(){
 
 void inData(){
 
-  if (Serial.available() > 0){
+  while (Serial.available() > 0){
     inByte = Serial.read();
     // only input if a letter, number, =,?,+ are typed! 
     if ((inByte >= 65 && inByte <= 94) || (inByte >=97 && inByte <=122) ||
@@ -108,6 +108,7 @@ void inData(){
       
       
     }
+    inByte=10;
   }// end serial.available
 
     if (inByte == 10 || inByte == 13)
@@ -250,8 +251,8 @@ void MEF1(){
   switch(estado_actual){
 
   case base:
-    posAngular[0] = posAngular[0] - valx;   //integrador para Motor0
-    posAngular[1] = posAngular[1] + valy;   //integrador para Motor1
+    posAngular[0] = posAngular[0] - valx;   //integrador para Motor0 pin 7
+    posAngular[1] = posAngular[1] + valy;   //integrador para Motor1 pin 8
 
     if(botonPresionado[0]) estado_actual=descansando;      
     if(botonPresionado[1]) estado_actual=codo;
@@ -265,8 +266,8 @@ void MEF1(){
     break;
 
   case codo:
-    posAngular[3]=posAngular[3] - valy;
-    posAngular[6]=posAngular[6] + valx;
+    posAngular[3]=posAngular[3] - valy; // pin 10
+    posAngular[6]=posAngular[6] + valx;// pin 13
 
     if(botonPresionado[0]) estado_actual=descansando;
     if(botonPresionado[2]) estado_actual=muneca;
@@ -278,8 +279,8 @@ void MEF1(){
     break;
 
   case muneca:
-    posAngular[5]=posAngular[5] + valx;
-    posAngular[4]=posAngular[4] + valy;
+    posAngular[5]=posAngular[5] + valx;//12
+    posAngular[4]=posAngular[4] + valy;//11
 
     if(botonPresionado[0]) estado_actual=descansando;      
     if(botonPresionado[1]) estado_actual=codo;
