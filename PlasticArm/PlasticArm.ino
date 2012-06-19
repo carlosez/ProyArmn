@@ -28,6 +28,12 @@ Servo MotorWarrior[7];
 int valx = 0;
 int valy = 0;
 
+String s1,s2;
+int cor;
+String command;
+char inByte;
+char carray[6];
+
 
 int ledState = LOW;             // ledState used to set the LED
 long previousMillis = 0;
@@ -39,6 +45,7 @@ int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
 
 int velDiv=0;
 
+enum Estados {base,  muneca,  codo, secuencia, descansando, serial};
 enum Estados estado_actual = base;
 
 //definicion de estados para secuencia1
@@ -78,6 +85,32 @@ void loop(){
 
 void inData(){
    
+  if (Serial.available() > 0){
+   inByte = Serial.read();
+    // only input if a letter, number, =,?,+ are typed! 
+    if ((inByte >= 65 && inByte <= 93) || (inByte >=97 && inByte <=122) ||
+    (inByte >= 48 &&  inByte <=57) || inByte == 43 || inByte == 44   ||
+    inByte == 61 || inByte == 63) {
+    command.concat(inByte);
+    }
+        }// end serial.available
+
+      if (inByte == 10 || inByte == 13){
+        {
+            inByte = 0;
+        } 
+       
+       if (command.indexOf('[')>0)
+       {
+         cor = command.indexOf('[')
+         s1 = command.substring(1,command.indexOf(']'))
+         s2 = command.substring(command.indexOf(']'))
+       
+       }
+  
+  
+   valx = 
+   valy = 
    
    
     for(int i = 0; i<5; i++){
