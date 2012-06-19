@@ -137,11 +137,9 @@ void inData(){
 
   }
   else if((estado_actual == codo  ||  estado_actual==muneca || estado_actual==base) || 
-    (command.indexOf('x') ||  command.indexOf('y')))
+    ((command.indexOf('x')==0) ||  (command.indexOf('y')==0) ))
   {
-    s1.toCharArray(carray,6);
-
-
+   
     if ( command.indexOf('x')== 0 )
     {
       s1 = command.substring(1,1);
