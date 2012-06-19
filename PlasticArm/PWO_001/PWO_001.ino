@@ -71,11 +71,11 @@ void loop(){
 }
 
 void inData(){
-//    valx = (map(analogRead(A0),0,1023,-512,511) + 10)/32;
-//    valy = (map(analogRead(A1),0,1023,-512,511) + 5)/32;
-   
-   valx = map(analogRead(A0),0,1023,-45,45)/8;
-   valy = map(analogRead(A1),0,1023,-45,45)/8;
+if (Serial.available() > 0){
+ 
+ 
+  
+}
    
     for(int i = 0; i<5; i++){
       botonAnterior[i]=botones[i];
