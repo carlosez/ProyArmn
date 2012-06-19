@@ -80,24 +80,6 @@ void loop(){
 
 void inData(){
    
-   entrada = Serial.read();
-   
-   if (entrada > 0 && entrada<256)
-   {
-   valx=8;
-   }
-   else if (entrada >256 && entrada <512)
-   {
-     valx=-8;
-   }
-   
-    if (entrada > 512 && entrada <768)
-   {
-   valx=8;
-   }
-   else if (entrada >768)
-   {
-     valx=-8;
    }
    
    
