@@ -98,7 +98,7 @@ void inData(){
     }
         }// end serial.available
 
-      if (inByte == 10 || inByte == 13){
+      if (inByte == 10 || inByte == 13)
         {
             inByte = 0;
         } 
@@ -128,18 +128,20 @@ void inData(){
         s2 = command.substring(command.indexOf(']')+1);
          
          s1.toCharArray(carray,6);
-         servo = atoi(carray);
+         valor = atoi(carray);
          
          s2.toCharArray(carray,6);
-         angulo = atoi(carray);
-          posAngular[servo]=angulo;
+       intervalo = atoi(carray);
+       
           Serial.print("Comando (");
           Serial.print(intervalo,DEC);
           Serial.print(") ");
-          Serial.println(tiempo,DEC);
+          Serial.println(valor,DEC);
          
          
-         
+           valx = 0;
+           valy = 0;
+   
          
        }
        else 
@@ -150,18 +152,18 @@ void inData(){
        }
   
   
-   valx = 
-   valy = 
+ 
    
-   
-    for(int i = 0; i<5; i++){
+    for(int i = 0; i<5; i++)
+    {
       botonAnterior[i]=botones[i];
       botones[i]=digitalRead(i+2);
       botonPresionado[i]=(!(botonAnterior[i]) && botones[i]);
     }
     
-}
 
+
+}
 void MEF1(){
   switch(estado_actual){
     
