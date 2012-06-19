@@ -28,7 +28,6 @@ Servo MotorWarrior[7];
 int valx = 0;
 int valy = 0;
 
-int entrada = 0;
 
 int ledState = LOW;             // ledState used to set the LED
 long previousMillis = 0;
