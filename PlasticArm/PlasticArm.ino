@@ -28,6 +28,8 @@ Servo MotorWarrior[7];
 int valx = 0;
 int valy = 0;
 
+int valorx,valory,intervalox,intervaloy;
+
 boolean flagx = false;
 boolean flagy = false;
 
@@ -89,7 +91,7 @@ void loop(){
 
 void inData(){
    
-  if (Serial.available() > 0){
+    if (Serial.available() > 0){
    inByte = Serial.read();
     // only input if a letter, number, =,?,+ are typed! 
     if ((inByte >= 65 && inByte <= 93) || (inByte >=97 && inByte <=122) ||
@@ -115,7 +117,7 @@ void inData(){
          
          s2.toCharArray(carray,6);
          angulo = atoi(carray);
-          posAngular[servo]=angulo;
+          posAngular[servo]=angulo;///Abra que arreglar esto para que no sea directo
           Serial.print("Comando [");
           Serial.print(servo,DEC);
           Serial.print("] ");
@@ -126,33 +128,45 @@ void inData(){
        else if((estado_actual == codo  ||  estado_actual==muneca || estado_actual==base) &&
        (command.indexOf('x') ||  command.indexOf('y')))
        {
-         
-       s1 = command.substring(1,1);
+         s1.toCharArray(carray,6);
+       
+      
        if ( command.indexOf('x')== 0 )
        {
+          s1 = command.substring(1,1);
           s2 = command.substring(command.indexOf(',')+1);
-          Serial.print("Comando  x");
           flagx=true;
+         
+          s1.toCharArray(carray,6);
+          intervalox= atoi(carray);
+          
           s2.toCharArray(carray,6);
-           valor = atoi(carray);
+          valorx= atoi(carray);
+          Serial.print("Comando  x");
+          Serial.print(intervalo,DEC);
+          Serial.print(" , ");
+          Serial.println(valor,DEC);
+           
          
        }
        else if (command.indexOf('y')==0)
        {
-         s2 = command.substring(command.indexOf(',')+1);
-         Serial.print("Comando  y");
-         flagy=true;
-         s2.toCharArray(carray,6);
-           valor = atoi(carray);
-       }
-       
-         s1.toCharArray(carray,6);
-         intervalo = atoi(carray);
+         s1 = command.substring(1,1);
+          s2 = command.substring(command.indexOf(',')+1);
+          flagy=true;
          
-         Serial.print(intervalo,DEC);
+          s1.toCharArray(carray,6);
+          intervaloy= atoi(carray);
+          
+          s2.toCharArray(carray,6);
+          valory= atoi(carray);
+          Serial.print("Comando  y");
+          Serial.print(intervalo,DEC);
           Serial.print(" , ");
           Serial.println(valor,DEC);
-
+       }
+       
+         
           previousMillis= millis();
           
          
@@ -161,11 +175,39 @@ void inData(){
        { 
         if (!command.equalsIgnoreCase(""))
         {
-         Serial.println("Invalid argument.");}
+         Serial.println("Invalid argument.");
        }
+       }
+       
+       
+       
+  if(millis() - previousMillis < intervalo)
+      {
+        if (flagx== true)
+        {
+          valx=valor;
+        }
+        if (flagy == true)
+        {
+          valy=valor;
+        }
+      } else //una vez sea mayor
+      {
+      if (flagx== true)
+        {
+          valx=0;
+           flagx=false; 
+        }
+        if (flagy == true)
+        {
+          valy=0;
+          flagy=false;
+        }
+      
+    }
   
   
- 
+  
    
     for(int i = 0; i<5; i++)
     {
@@ -173,10 +215,9 @@ void inData(){
       botones[i]=digitalRead(i+2);
       botonPresionado[i]=(!(botonAnterior[i]) && botones[i]);
     }
-    
-
-
 }
+
+
 void MEF1(){
   switch(estado_actual){
     
@@ -218,20 +259,7 @@ void MEF1(){
     case serial:
     
     
-    if(millis() - previousMillis > intervalo) {
-      
-    
-    if (flagx== true)
-    {
-     // cambiar(valor,)
-      flagx=false;
-    }
-    else
-    {
-      previousMillis= millis();
-    }
-
-      }
+   //done
     
     
     break;
@@ -251,7 +279,8 @@ void MEF1(){
         case inicial:
           posInicial();
          
-         if((posAngular[0]==75) && (posAngular[1]==75) && (posAngular[2]==72) && (posAngular[3]==64) && (posAngular[4]==121) && (posAngular[5]==75) && (posAngular[6]==12))
+         if((posAngular[0]==75) && (posAngular[1]==75) && (posAngular[2]==72) && 
+         (posAngular[3]==64) && (posAngular[4]==121) && (posAngular[5]==75) && (posAngular[6]==12))
            estado_secuencia1 = desplazarIzquierda;
         break;
         
