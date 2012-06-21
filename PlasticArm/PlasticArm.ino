@@ -40,8 +40,8 @@ String command;
 char inByte;
 char carray[6];
 
-int intervalo;
-int valor;
+int intervalo=0;
+int valor=0;
 
 long previousMillisx,previousMillisy = 0;
 
