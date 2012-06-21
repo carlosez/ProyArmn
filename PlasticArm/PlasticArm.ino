@@ -29,7 +29,7 @@ int valx = 0;
 int valy = 0;
 
 int valorx,valory,intervalox,intervaloy;
-
+int ave=0;
 boolean flagx = false;
 boolean flagy = false;
 boolean flaglectura = true;
