@@ -207,14 +207,14 @@ case vervx:
      Serial.print(" Tiempo Restante: "); 
      if ((vx[0] + vx[1] - millis() > 0 ) && (vx[0] + vx[1] - millis() <8000 )) {Serial.print(vx[0]+vx[1]-millis(),DEC);}
      else{Serial.print(" Terminado");}
-     Serial.print(" Valor x: "); Serial.println(valx,DEC);
+     Serial.print("ms Valor x: "); Serial.println(valx,DEC);
 break;
 
 case vervy:     
      Serial.print(" Tiempo Restante: "); 
      if ((vy[0] + vy[1] - millis() > 0 ) && (vy[0] + vy[1] - millis() <8000 )) {Serial.print(vy[0]+vy[1]-millis(),DEC);}
      else{Serial.print(" Terminado");}
-     Serial.print(" Valor y: "); Serial.println(valy,DEC);
+     Serial.print("ms Valor y: "); Serial.println(valy,DEC);
 break;
 
 case invalid:
