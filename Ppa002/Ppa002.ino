@@ -83,6 +83,7 @@ Serial.begin(9600);
 
 void loop(){
   inData();
+  delay(70);
   MEF1();
   outData();
 }
@@ -183,8 +184,7 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vx[0]=millis(); vx[1]=a; valx=b;
-if (vx[1]>8000){vx[1]=8000;}if (vx[1]<-8000){vx[1]=-8000;}
-if (valx>8){valx=8;}if (valx<-8){valx=-8;}
+
 Serial.print("valx: tiempo: ");Serial.print(vx[1],DEC);Serial.print("ms valor:");Serial.println(valx,DEC);
 
 break;
@@ -197,8 +197,7 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vy[0]=millis(); vy[1]=a; valy=b;
-if (vy[1]>8000){vy[1]=8000;}if (vy[1]<-8000){vy[1]=-8000;}
-if (valy>8){valy=8;}if (valy<-8){valy=-8;}
+
 Serial.print("valy: tiempo: ");Serial.print(vy[1],DEC);Serial.print("ms  valor:");Serial.println(valy,DEC);
 
 break;
@@ -226,10 +225,6 @@ break;
 command="";
 opcion=na;
 
-if (valx>8){valx=8;}
-if (valx<-8){valx=-8;}
-if (valy>8){valx=8;}
-if (valy<-8){valx=-8;}
 
 }// fin de recepcion
   
@@ -246,7 +241,7 @@ void MEF1(){
   switch(estado_actual){
     
     case base:
-      posAngular[0] = posAngular[0] - valx;   //integrador para Motor0
+      posAngular[0] = posAngular[0] + valx;   //integrador para Motor0
       posAngular[1] = posAngular[1] + valy;   //integrador para Motor1
 
       if(botonPresionado[0]) estado_actual=descansando;      
@@ -370,6 +365,8 @@ void MEF1(){
       if(botonPresionado[3]) estado_actual=base;
       
     break;
+
+
 
   }
   
