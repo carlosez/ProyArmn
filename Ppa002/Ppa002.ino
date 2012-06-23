@@ -24,9 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Servo MotorWarrior[7];
 int led = 13;
-unsigned long tled[2]={0,1000};
-unsigned long vx[3]={0,0,0};
-unsigned long vy[3]={0,0,0};
 
 int valx = 0;
 int valy = 0;
