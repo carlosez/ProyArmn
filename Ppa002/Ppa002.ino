@@ -108,11 +108,11 @@ if (command.equalsIgnoreCase("hey")){opcion=hey;}
 else if (command.startsWith("minombrees")){opcion=nombre;}
 else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
-else if (command.indexOf('x') == 1){opcion=cvalx;}
-else if (command.indexOf('y') == 1){opcion=cvaly;}
+else if (command.indexOf('x') == 1 && command.length()>2){opcion=cvalx;}
+else if (command.indexOf('y') == 1 && command.length()>2){opcion=cvaly;}
 else if (command.indexOf('l') == 0){opcion=ledt;}
-else if (command.equalsIgnoreCase("xv")){opcion=vervx;}
-else if (command.equalsIgnoreCase("yv")){opcion=vervy;}
+else if (command.equalsIgnoreCase("x") && command.length()==1){opcion=vervx;}
+else if (command.equalsIgnoreCase("y") ){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
@@ -184,7 +184,8 @@ temp2.toCharArray(carray,6);
 b = atoi(carray);
 vx[0]=millis(); vx[1]=a; valx=b;
 if (vx[1]>8000){vx[1]=8000;}if (vx[1]<-8000){vx[1]=-8000;}
-Serial.print("valx: tiempo:");Serial.print(vx[1],DEC);Serial.print("ms valor:");Serial.println(valx,DEC);
+if (valx>8){valx=8;}if (valx<-8){valx=-8;}
+Serial.print("valx: tiempo: ");Serial.print(vx[1],DEC);Serial.print("ms valor:");Serial.println(valx,DEC);
 
 break;
 
@@ -197,22 +198,23 @@ temp2.toCharArray(carray,6);
 b = atoi(carray);
 vy[0]=millis(); vy[1]=a; valy=b;
 if (vy[1]>8000){vy[1]=8000;}if (vy[1]<-8000){vy[1]=-8000;}
-Serial.print("valy: tiempo:");Serial.print(vy[1],DEC);Serial.print("ms  valor:");Serial.println(valy,DEC);
+if (valy>8){valy=8;}if (valy<-8){valy=-8;}
+Serial.print("valy: tiempo: ");Serial.print(vy[1],DEC);Serial.print("ms  valor:");Serial.println(valy,DEC);
 
 break;
  
 case vervx:     
-     Serial.print(" Tiempo Restante:"); 
-     if ((vx[0] + vx[1] - millis() > 0 ) && (vx[0] + vx[1] - millis() <9000 )) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
-     else{Serial.println(" Terminado");}
-     Serial.print("valor x: "); Serial.print(valx,DEC);
+     Serial.print(" Tiempo Restante: "); 
+     if ((vx[0] + vx[1] - millis() > 0 ) && (vx[0] + vx[1] - millis() <8000 )) {Serial.print(vx[0]+vx[1]-millis(),DEC);}
+     else{Serial.print(" Terminado");}
+     Serial.print(" Valor x: "); Serial.println(valx,DEC);
 break;
 
 case vervy:     
-     Serial.print(" Tiempo Restante:"); 
-     if (vy[0] + vy[1]-millis() > 0) {Serial.println(vy[0]+vy[1]-millis(),DEC);}
+     Serial.print(" Tiempo Restante: "); 
+     if ((vy[0] + vy[1] - millis() > 0 ) && (vy[0] + vy[1] - millis() <8000 )) {Serial.print(vy[0]+vy[1]-millis(),DEC);}
      else{Serial.print(" Terminado");}
-     Serial.print("valor y: "); Serial.print(valy,DEC);
+     Serial.print(" Valor y: "); Serial.println(valy,DEC);
 break;
 
 case invalid:
