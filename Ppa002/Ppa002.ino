@@ -108,11 +108,8 @@ else if (command.indexOf('.') == 1){opcion=servopos;}
 else if (command.indexOf('x') == 1){opcion=cvalx;}
 else if (command.indexOf('y') == 1){opcion=cvaly;}
 else if (command.indexOf('l') == 0){opcion=ledt;}
-else if (command.equalsIgnoreCase("vax")){opcion=vervx;}
-else if (command.equalsIgnoreCase("vay")){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
-else if (command.equalsIgnoreCase("mun")){opcion=mun;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
 else if (command.equalsIgnoreCase("sec")){opcion=sec;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
@@ -153,11 +150,6 @@ MotorWarrior[a].write(posAngular[b]);
 Serial.print("Motor ");Serial.print(a,DEC);Serial.print(" angulo ");Serial.println(b,DEC);
 break;
 
-case des: botonPresionado[0]=true;Serial.println("Estado: descansando"); break;
-case cod: botonPresionado[1]=true;Serial.println("Estado: codo"); break;
-case mun: botonPresionado[2]=true;Serial.println("Estado: muneca"); break;
-case bas: botonPresionado[3]=true;Serial.println("Estado: base"); break;
-case sec: botonPresionado[4]=true;Serial.println("Estado: secuencia"); break;
 
 case btn: 
       if(botonPresionado[0]==true) Serial.println("Estado: descansando");
