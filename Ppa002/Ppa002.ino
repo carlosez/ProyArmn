@@ -53,7 +53,7 @@ enum Estados estado_actual = base;
 
 enum estados_secuencia {subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
-enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly};
+enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly,vervx,vervy};
 comando opcion=na;
 
 boolean botones[5]={HIGH, HIGH, HIGH, HIGH, HIGH};
@@ -110,6 +110,8 @@ else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
 else if (command.indexOf('x') == 1){opcion=cvalx;}
 else if (command.indexOf('y') == 1){opcion=cvaly;}
+else if (command.equalsIgnoreCase("vax")){opcion=vervx;}
+else if (command.equalsIgnoreCase("vay")){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
@@ -190,7 +192,21 @@ vy[0]=millis(); vy[1]=a; valy=b;
 Serial.print("valy: tiempo:");Serial.print(a,DEC);Serial.print("ms  valor:");Serial.println(b,DEC);
 
 break;
-      
+ 
+case vervx:     
+     Serial.print("valor x: "); Serial.print(valx,DEC);
+     Serial.print("Tiempo Restante:"); 
+     if (vx[0]+vx[1]-millis() > 0) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
+     else{Serial.print("Terminado");}
+break;
+
+case vervy:     
+     Serial.print("valor y: "); Serial.print(valy,DEC);
+     Serial.print("Tiempo Restante:"); 
+     if (vy[0]+vy[1]-millis() > 0) {Serial.println(vy[0]+vy[1]-millis(),DEC);}
+     else{Serial.print("Terminado");}
+     
+break;
 
 case invalid:
 Serial.print("Invalid argument: ");
@@ -200,6 +216,11 @@ break;
 }
 command="";
 opcion=na;
+
+if (valx>8){valx=8;}
+if (valx<-8){valx=-8;}
+if (valy>8){valx=8;}
+if (valy<-8){valx=-8;}
 
 }// fin de recepcion
   
