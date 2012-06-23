@@ -24,7 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Servo MotorWarrior[7];
 int led = 13;
-long tled[2]={'0','5000'};
+unsigned long tled[2]={0,1000};
+unsigned long vx[3]={0,0,0};
+unsigned long vy[3]={0,0,0};
 
 int valx = 0;
 int valy = 0;
@@ -51,7 +53,7 @@ enum Estados estado_actual = base;
 
 enum estados_secuencia {subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
-enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn};
+enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly};
 comando opcion=na;
 
 boolean botones[5]={HIGH, HIGH, HIGH, HIGH, HIGH};
@@ -91,7 +93,7 @@ void inData(){
 if (Serial.available() > 0){
    inByte = Serial.read();
    
-if ((inByte >= 65 && inByte <= 90) || (inByte >=97 && inByte <=122) || (inByte >= 48 && 
+if ((inByte >= 65 && inByte <= 90) || (inByte >=97 && inByte <=122) || (inByte >= 40 && 
   inByte <=57) || inByte == 43 || inByte == 61 || inByte == 63 || inByte == 46 || inByte == 44) 
 {
     command.concat(inByte);
@@ -106,6 +108,8 @@ if (command.equalsIgnoreCase("hey")){opcion=hey;}
 else if (command.startsWith("minombrees")){opcion=nombre;}
 else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
+else if (command.indexOf('x') == 1){opcion=cvalx;}
+else if (command.indexOf('y') == 1){opcion=cvaly;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
@@ -121,6 +125,7 @@ switch(opcion)
 {
 case hey:
 tled[0]=millis();
+Serial.println(millis(),DEC);
 digitalWrite(led,HIGH);
 Serial.println("hello there!");
 break;
@@ -161,6 +166,31 @@ case btn:
       
       
       break;
+      
+case cvalx:
+temp1 = command.substring(0,command.indexOf('x'));//substring(indice,indice) dif de C#
+temp2 = command.substring(command.indexOf('x')+1);
+temp1.toCharArray(carray,6);
+a = atoi(carray) * 1000;
+temp2.toCharArray(carray,6);
+b = atoi(carray);
+vx[0]=millis(); vx[1]=a; valx=b;
+Serial.print("valx: tiempo:");Serial.print(a,DEC);Serial.print("ms valor:");Serial.println(b,DEC);
+
+break;
+
+case cvaly:
+temp1 = command.substring(0,command.indexOf('y'));//substring(indice,indice) dif de C#
+temp2 = command.substring(command.indexOf('y')+1);
+temp1.toCharArray(carray,6);
+a = atoi(carray) * 1000;
+temp2.toCharArray(carray,6);
+b = atoi(carray);
+vy[0]=millis(); vy[1]=a; valy=b;
+Serial.print("valy: tiempo:");Serial.print(a,DEC);Serial.print("ms  valor:");Serial.println(b,DEC);
+
+break;
+      
 
 case invalid:
 Serial.print("Invalid argument: ");
@@ -337,14 +367,17 @@ void outData(){
       
       MotorWarrior[i].write(posAngular[i]);
    
+   
+   if ((millis() - tled[0] )>=tled[1])
+   {  digitalWrite(led,LOW);    }
+   
+   if (millis() - vx[0] > vx[1])
+   {valx=0; }
+    if (millis() - vy[0] > vy[1])
+   {valy=0; }
+
     }
-    
-    if (millis()<tled[0]+tled[1])
-    {digitalWrite(led,LOW);}
-    else {digitalWrite(led,LOW);}
-
 }
-
 void posInicial(){
 
 
