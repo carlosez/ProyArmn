@@ -195,16 +195,16 @@ break;
  
 case vervx:     
      Serial.print("valor x: "); Serial.print(valx,DEC);
-     Serial.print("Tiempo Restante:"); 
-     if (vx[0]+vx[1]-millis() > 0) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
-     else{Serial.print("Terminado");}
+     Serial.print(" Tiempo Restante:"); 
+     if (vx[0] + vx[1] - millis() > 0) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
+     else{Serial.print(" Terminado");}
 break;
 
 case vervy:     
      Serial.print("valor y: "); Serial.print(valy,DEC);
-     Serial.print("Tiempo Restante:"); 
-     if (vy[0]+vy[1]-millis() > 0) {Serial.println(vy[0]+vy[1]-millis(),DEC);}
-     else{Serial.print("Terminado");}
+     Serial.print(" Tiempo Restante:"); 
+     if (vy[0] + vy[1]-millis() > 0) {Serial.println(vy[0]+vy[1]-millis(),DEC);}
+     else{Serial.print(" Terminado");}
      
 break;
 
