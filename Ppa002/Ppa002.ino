@@ -23,10 +23,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <Servo.h>
 
 Servo MotorWarrior[7];
+int led = 13;
+long tled[2]={'0','5000'};
 
 int valx = 0;
 int valy = 0;
-int Motor[7] = {7, 8, 9, 10, 11, 12, 13};
+int Motor[7] = {7, 8, 9, 10, 11, 12,3};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
 int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
 
@@ -66,7 +68,7 @@ void setup(){
     digitalWrite(PinCounter, HIGH);
      
   }
- 
+pinMode(led, OUTPUT);
 Serial.begin(9600);  
 //valores iniciales
   
@@ -118,6 +120,8 @@ else  {  if (!command.equalsIgnoreCase("")) {opcion=invalid;}}
 switch(opcion)
 {
 case hey:
+tled[0]=millis();
+digitalWrite(led,HIGH);
 Serial.println("hello there!");
 break;
 
@@ -125,6 +129,7 @@ case nombre:
 temp1 = command.substring(10);
 Serial.print("Hola, ");
 Serial.println(temp1);
+
 break;
 
 case servopos:
@@ -333,6 +338,10 @@ void outData(){
       MotorWarrior[i].write(posAngular[i]);
    
     }
+    
+    if (millis()<tled[0]+tled[1])
+    {digitalWrite(led,LOW);}
+    else {digitalWrite(led,LOW);}
 
 }
 
