@@ -91,9 +91,9 @@ if (Serial.available() > 0){
    
    // if ((inByte >= 65 && inByte <= 90) || (inByte >=97 && inByte <=122) || (inByte >= 48 && 
     //inByte <=57) || inByte == 43 || inByte == 61 || inByte == 63) 
-    {
+   //{
     command.concat(inByte);
-}
+//}
 }
 
 
@@ -112,8 +112,7 @@ else if (command.equalsIgnoreCase("bas")){opcion=bas;}
 else if (command.equalsIgnoreCase("sec")){opcion=sec;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
 else if (command.equalsIgnoreCase("btn")){opcion=btn;}
-else  {  if (!command.equalsIgnoreCase("")) {opcion=invalid;}
-}
+else  {  if (!command.equalsIgnoreCase("")) {opcion=invalid;}}
 
 
 
@@ -147,15 +146,16 @@ case bas: botonPresionado[3]=true; break;
 case sec: botonPresionado[4]=true; break;
 
 case btn: 
-      if(botonPresionado[0]) Serial.println("Estado: descansando");
-      if(botonPresionado[1]) Serial.println("Estado: codo");
-      if(botonPresionado[2]) Serial.println("Estado: muneca");
-      if(botonPresionado[3]) Serial.println("Estado: base");
-      if(botonPresionado[3]) Serial.println("Estado: secuencia");
+      if(botonPresionado[0]==true) Serial.println("Estado: descansando");
+      if(botonPresionado[1]==true) Serial.println("Estado: codo");
+      if(botonPresionado[2]==true) Serial.println("Estado: muneca");
+      if(botonPresionado[3]==true) Serial.println("Estado: base");
+      if(botonPresionado[3]==true) Serial.println("Estado: secuencia");
       break;
 
 case invalid:
-Serial.println("Invalid argument.");
+Serial.print("Invalid argument: ");
+Serial.println(command);
 break;
 
 }
