@@ -53,7 +53,7 @@ enum Estados estado_actual = base;
 
 enum estados_secuencia {subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
-enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly,vervx,vervy};
+enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly,vervx,vervy,ledt};
 comando opcion=na;
 
 boolean botones[5]={HIGH, HIGH, HIGH, HIGH, HIGH};
@@ -110,6 +110,7 @@ else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
 else if (command.indexOf('x') == 1){opcion=cvalx;}
 else if (command.indexOf('y') == 1){opcion=cvaly;}
+else if (command.indexOf('l') == 0){opcion=ledt;}
 else if (command.equalsIgnoreCase("vax")){opcion=vervx;}
 else if (command.equalsIgnoreCase("vay")){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
@@ -126,10 +127,15 @@ else  {  if (!command.equalsIgnoreCase("")) {opcion=invalid;}}
 switch(opcion)
 {
 case hey:
-tled[0]=millis();
-Serial.println(millis(),DEC);
-digitalWrite(led,HIGH);
 Serial.println("hello there!");
+break;
+
+case ledt:
+temp1 = command.substring(1);
+temp1.toCharArray(carray,6);
+a = atoi(carray)*1000;
+tled[0]=millis(); tled[1]=a;
+digitalWrite(led,HIGH);
 break;
 
 case nombre:
