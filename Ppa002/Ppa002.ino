@@ -89,23 +89,22 @@ void inData(){
 if (Serial.available() > 0){
    inByte = Serial.read();
    
-   // if ((inByte >= 65 && inByte <= 90) || (inByte >=97 && inByte <=122) || (inByte >= 48 && 
-    //inByte <=57) || inByte == 43 || inByte == 61 || inByte == 63) 
-   //{
+if ((inByte >= 65 && inByte <= 90) || (inByte >=97 && inByte <=122) || (inByte >= 48 && 
+  inByte <=57) || inByte == 43 || inByte == 61 || inByte == 63 || inByte == 46 || inByte == 44) 
+{
     command.concat(inByte);
-//}
+}
 }
 
 
 if (inByte == 10 || inByte == 13){
 
   inByte = 0;
-
-if      (command.equalsIgnoreCase("hey")){opcion=hey;}
+if (command.equalsIgnoreCase("hey")){opcion=hey;}
 else if (command.startsWith("minombrees")){opcion=nombre;}
 else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
-else if (command.equalsIgnoreCase("des")){opcion=bas;}
+else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
@@ -139,18 +138,23 @@ MotorWarrior[a].write(posAngular[b]);
 Serial.print("Motor ");Serial.print(a,DEC);Serial.print(" angulo ");Serial.println(b,DEC);
 break;
 
-case des: botonPresionado[0]=true; break;
-case cod: botonPresionado[1]=true; break;
-case mun: botonPresionado[2]=true; break;
-case bas: botonPresionado[3]=true; break;
-case sec: botonPresionado[4]=true; break;
+case des: botonPresionado[0]=true;Serial.println("Estado: descansando"); break;
+case cod: botonPresionado[1]=true;Serial.println("Estado: codo"); break;
+case mun: botonPresionado[2]=true;Serial.println("Estado: muneca"); break;
+case bas: botonPresionado[3]=true;Serial.println("Estado: base"); break;
+case sec: botonPresionado[4]=true;Serial.println("Estado: secuencia"); break;
 
 case btn: 
       if(botonPresionado[0]==true) Serial.println("Estado: descansando");
       if(botonPresionado[1]==true) Serial.println("Estado: codo");
       if(botonPresionado[2]==true) Serial.println("Estado: muneca");
       if(botonPresionado[3]==true) Serial.println("Estado: base");
-      if(botonPresionado[3]==true) Serial.println("Estado: secuencia");
+      if(botonPresionado[4]==true) Serial.println("Estado: secuencia");
+      if( !(botonPresionado[0]==true || botonPresionado[1]==true ||
+          botonPresionado[2]==true || botonPresionado[3]==true ||
+          botonPresionado[4]==true)) {Serial.println("Estado: NONE");}
+      
+      
       break;
 
 case invalid:
@@ -164,13 +168,13 @@ opcion=na;
 
 }// fin de recepcion
   
-   
+   /*
     for(int i = 0; i<5; i++){
       botonAnterior[i]=botones[i];
       botones[i]=digitalRead(i+2);
       botonPresionado[i]=(!(botonAnterior[i]) && botones[i]);
     }
-    
+    */
 }
 
 void MEF1(){
