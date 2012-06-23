@@ -172,7 +172,6 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vx[0]=millis(); vx[1]=a; valx=b;
-Serial.print("valx: tiempo:");Serial.print(a,DEC);Serial.print("ms valor:");Serial.println(b,DEC);
 
 break;
 
@@ -184,15 +183,12 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vy[0]=millis(); vy[1]=a; valy=b;
-Serial.print("valy: tiempo:");Serial.print(a,DEC);Serial.print("ms  valor:");Serial.println(b,DEC);
 
 break;
  
 case vervx:     
      Serial.print("valor x: "); Serial.print(valx,DEC);
      Serial.print(" Tiempo Restante:"); 
-     if (vx[0] + vx[1] - millis() > 0) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
-     else{Serial.print(" Terminado");}
 break;
 
 case vervy:     
