@@ -24,6 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Servo MotorWarrior[7];
 int led = 13;
+ long tled[2]={0,1000};
+ long vx[3]={0,0,0};
+ long vy[3]={0,0,0};
 
 int valx = 0;
 int valy = 0;
@@ -108,8 +111,11 @@ else if (command.indexOf('.') == 1){opcion=servopos;}
 else if (command.indexOf('x') == 1){opcion=cvalx;}
 else if (command.indexOf('y') == 1){opcion=cvaly;}
 else if (command.indexOf('l') == 0){opcion=ledt;}
+else if (command.equalsIgnoreCase("xv")){opcion=vervx;}
+else if (command.equalsIgnoreCase("yv")){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
+else if (command.equalsIgnoreCase("mun")){opcion=mun;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
 else if (command.equalsIgnoreCase("sec")){opcion=sec;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
@@ -150,6 +156,11 @@ MotorWarrior[a].write(posAngular[b]);
 Serial.print("Motor ");Serial.print(a,DEC);Serial.print(" angulo ");Serial.println(b,DEC);
 break;
 
+case des: PresionarBoton(0);Serial.println("Estado: descansando"); break;
+case cod: PresionarBoton(1);Serial.println("Estado: codo"); break;
+case mun: PresionarBoton(2);Serial.println("Estado: muneca"); break;
+case bas: PresionarBoton(3);Serial.println("Estado: base"); break;
+case sec: PresionarBoton(4);Serial.println("Estado: secuencia"); break;
 
 case btn: 
       if(botonPresionado[0]==true) Serial.println("Estado: descansando");
@@ -172,6 +183,8 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vx[0]=millis(); vx[1]=a; valx=b;
+if (vx[1]>8000){vx[1]=8000;}if (vx[1]<-8000){vx[1]=-8000;}
+Serial.print("valx: tiempo:");Serial.print(vx[1],DEC);Serial.print("ms valor:");Serial.println(valx,DEC);
 
 break;
 
@@ -183,20 +196,23 @@ a = atoi(carray) * 1000;
 temp2.toCharArray(carray,6);
 b = atoi(carray);
 vy[0]=millis(); vy[1]=a; valy=b;
+if (vy[1]>8000){vy[1]=8000;}if (vy[1]<-8000){vy[1]=-8000;}
+Serial.print("valy: tiempo:");Serial.print(vy[1],DEC);Serial.print("ms  valor:");Serial.println(valy,DEC);
 
 break;
  
 case vervx:     
-     Serial.print("valor x: "); Serial.print(valx,DEC);
      Serial.print(" Tiempo Restante:"); 
+     if ((vx[0] + vx[1] - millis() > 0 ) && (vx[0] + vx[1] - millis() <9000 )) {Serial.println(vx[0]+vx[1]-millis(),DEC);}
+     else{Serial.println(" Terminado");}
+     Serial.print("valor x: "); Serial.print(valx,DEC);
 break;
 
 case vervy:     
-     Serial.print("valor y: "); Serial.print(valy,DEC);
      Serial.print(" Tiempo Restante:"); 
      if (vy[0] + vy[1]-millis() > 0) {Serial.println(vy[0]+vy[1]-millis(),DEC);}
      else{Serial.print(" Terminado");}
-     
+     Serial.print("valor y: "); Serial.print(valy,DEC);
 break;
 
 case invalid:
@@ -418,5 +434,15 @@ void posInicial(){
            
   }
 
+
+
+void PresionarBoton(int a)
+{
+      for (int i=0 ;i<5;i++)
+      {
+        if (a==i){botonPresionado[i]=true;}
+        else {botonPresionado[i]=false;}
+      }
+}
 
 
