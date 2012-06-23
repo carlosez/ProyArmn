@@ -49,7 +49,7 @@ enum Estados estado_actual = base;
 
 enum estados_secuencia {subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
-enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec};
+enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn};
 comando opcion=na;
 
 boolean botones[5]={HIGH, HIGH, HIGH, HIGH, HIGH};
@@ -103,13 +103,15 @@ if (inByte == 10 || inByte == 13){
 
 if      (command.equalsIgnoreCase("hey")){opcion=hey;}
 else if (command.startsWith("minombrees")){opcion=nombre;}
+else if (command.startsWith("mynameis")){opcion=minombre;}
 else if (command.indexOf('.') == 1){opcion=servopos;}
 else if (command.equalsIgnoreCase("des")){opcion=bas;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
 else if (command.equalsIgnoreCase("sec")){opcion=sec;}
-else if (command.startsWith("mynameis")){opcion=minombre;}
+else if (command.equalsIgnoreCase("bas")){opcion=bas;}
+else if (command.equalsIgnoreCase("btn")){opcion=btn;}
 else  {  if (!command.equalsIgnoreCase("")) {opcion=invalid;}
 }
 
@@ -143,6 +145,14 @@ case cod: botonPresionado[1]=true; break;
 case mun: botonPresionado[2]=true; break;
 case bas: botonPresionado[3]=true; break;
 case sec: botonPresionado[4]=true; break;
+
+case btn: 
+      if(botonPresionado[0]) Serial.println("Estado: descansando");
+      if(botonPresionado[1]) Serial.println("Estado: codo");
+      if(botonPresionado[2]) Serial.println("Estado: muneca");
+      if(botonPresionado[3]) Serial.println("Estado: base");
+      if(botonPresionado[3]) Serial.println("Estado: secuencia");
+      break;
 
 case invalid:
 Serial.println("Invalid argument.");
@@ -293,6 +303,12 @@ void MEF1(){
     break;
 
   }
+  
+  // ver el estado de los botones y del sistema
+  
+  
+  
+  
 
 }
 
