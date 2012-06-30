@@ -30,7 +30,7 @@ int led = 13;
 
 int valx = 0;
 int valy = 0;
-int Motor[7] = {7, 8, 9, 10, 11, 12,3};
+int Motor[7] = {7, 8, 9, 10, 11, 12,13};
 //int posAngular[7]={426, 472, 472,341, 568, 425, 570};
 int posAngular[7] = {75, 75, 72, 64, 121, 75, 0 }; //posicion Inici
 
@@ -53,7 +53,7 @@ enum Estados estado_actual = base;
 
 enum estados_secuencia {subirIzquierda, desplazarDerecha, bajarDerecha, subirDerecha, desplazarIzquierda, bajarIzquierda, paro, inicial};
 enum estados_secuencia estado_secuencia1 = inicial;
-enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly,vervx,vervy,ledt};
+enum comando {na,hey,minombre,invalid,nombre,servopos,des,cod,mun,bas,sec,btn,cvalx,cvaly,vervx,vervy,ledt,xy};
 comando opcion=na;
 
 boolean botones[5]={HIGH, HIGH, HIGH, HIGH, HIGH};
@@ -70,7 +70,7 @@ void setup(){
     digitalWrite(PinCounter, HIGH);
      
   }
-pinMode(led, OUTPUT);
+
 Serial.begin(9600);  
 //valores iniciales
   
@@ -115,6 +115,7 @@ else if (command.indexOf('l') == 0){opcion=ledt;}
 else if (command.equalsIgnoreCase("x") && command.length()==1){opcion=vervx;}
 else if (command.equalsIgnoreCase("y") ){opcion=vervy;}
 else if (command.equalsIgnoreCase("des")){opcion=des;}
+else if (command.equalsIgnoreCase("xy")){opcion=xy;}
 else if (command.equalsIgnoreCase("cod")){opcion=cod;}
 else if (command.equalsIgnoreCase("mun")){opcion=mun;}
 else if (command.equalsIgnoreCase("bas")){opcion=bas;}
@@ -242,7 +243,7 @@ void MEF1(){
     
     case base:
       posAngular[0] = posAngular[0] + valx;   //integrador para Motor0
-      posAngular[1] = posAngular[1] + valy;   //integrador para Motor1
+      posAngular[1] = posAngular[1] - valx;   //integrador para Motor1
 
       if(botonPresionado[0]) estado_actual=descansando;      
       if(botonPresionado[1]) estado_actual=codo;
